@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="tr" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Okul Müzik Kulübü — Hakkımızda." />
+  <title>Hakkımızda | Okul Müzik Kulübü</title>
+
+  <!--
+    ✅ Bakım notu (gelecek geliştiriciler için)
+    - Renk paleti: aşağıdaki tailwind.config içinde "brand" olarak tanımlı.
+    - Tek sayfa akışı: #duyurular, #takvim, #yazilar bölümleri.
+    - İki alt sayfa: about.html ve contact.html.
+    - Tailwind CDN kullanıyor (statik/dosya ile çalışır). Prod için: Tailwind CLI ile build alın.
+  -->
+
+  <link rel="icon" href="assets/logo.jpg" />
+
+  <!-- Tailwind (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Logo renklerinden çıkarılmış palet (kolayca değiştirilebilir)
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50:  '#f0fbfc',
+              100: '#d9f4f7',
+              200: '#b6e8ee',
+              300: '#90d0e0',
+              400: '#60c0d0',
+              500: '#40b0c0',
+              600: '#2e96a3',
+              700: '#227481',
+              800: '#1b5661',
+              900: '#133940'
+            },
+            ink: '#303040'
+          },
+          boxShadow: {
+            soft: '0 10px 30px rgba(17, 24, 39, 0.08)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Component classes (HTML'i sade tutar) -->
+  <style type="text/tailwindcss">
+    @layer base {
+      :focus-visible { outline: none; }
+    }
+    @layer components {
+      .wrap { @apply mx-auto max-w-5xl px-4 sm:px-6; }
+      .section { @apply py-12 sm:py-16; }
+      .section-title { @apply text-xl sm:text-2xl font-semibold text-ink tracking-tight; }
+      .section-sub { @apply mt-2 text-sm sm:text-base text-ink/70; }
+      .hairline { @apply border-t border-ink/10; }
+
+      .navlink { @apply text-sm font-medium text-ink/75 hover:text-ink transition; }
+      .navlink-active { @apply text-ink; }
+
+      .btn { @apply inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-medium transition shadow-sm; }
+      .btn-primary { @apply bg-ink text-white hover:bg-ink/90; }
+      .btn-secondary { @apply bg-brand-100 text-ink hover:bg-brand-200; }
+      .btn-ghost { @apply bg-transparent text-ink/80 hover:text-ink; }
+
+      .chip { @apply inline-flex items-center gap-2 rounded-full border border-ink/10 bg-white px-3 py-1 text-xs text-ink/70; }
+
+      .list-item { @apply py-5; }
+      .item-title { @apply text-base font-semibold text-ink; }
+      .item-meta { @apply mt-1 text-xs text-ink/60; }
+      .item-text { @apply mt-2 text-sm text-ink/75; }
+      .item-link { @apply mt-3 inline-flex text-sm font-medium text-brand-700 hover:text-brand-800; }
+
+      .panel { @apply rounded-2xl border border-ink/10 bg-white shadow-soft; }
+      .panel-inner { @apply p-5 sm:p-7; }
+
+      .announce-bar { @apply rounded-2xl border border-brand-200 bg-brand-50; }
+      .announce-inner { @apply px-5 py-4 sm:px-7 sm:py-5; }
+
+      .footerlink { @apply text-sm text-ink/70 hover:text-ink transition; }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen bg-white text-ink antialiased">
+  <a href="#icerik" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:shadow-soft">
+    İçeriğe atla
+  </a>
+
+  <!-- Header / Nav -->
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-ink/10">
+    <div class="wrap">
+      <div class="flex h-16 items-center justify-between">
+        <a href="index.html" class="flex items-center gap-3">
+          <img src="assets/logo.jpg" alt="Kulüp logosu" class="h-9 w-9 rounded-xl object-cover" />
+          <div class="leading-tight">
+            <div class="text-sm font-semibold tracking-tight">Okul Müzik Kulübü</div>
+            <div class="text-xs text-ink/60">Duyurular • Takvim • Yazılar</div>
+          </div>
+        </a>
+
+        <!-- Desktop nav -->
+        <nav class="hidden md:flex items-center gap-6" aria-label="Birincil">
+          <a class="navlink" href="index.html#duyurular">Duyurular</a>
+          <a class="navlink" href="index.html#takvim">Takvim</a>
+          <a class="navlink" href="index.html#yazilar">Öğrenci Yazıları</a>
+          <a class="navlink navlink-active" href="about.html" aria-current="page">Hakkımızda</a>
+          <a class="navlink" href="contact.html">İletişim</a>
+          <a class="btn btn-secondary" href="index.html#katil">Katıl / Başvuru</a>
+        </nav>
+
+        <!-- Mobile menu button -->
+        <button
+          id="menuBtn"
+          class="md:hidden inline-flex items-center justify-center rounded-xl border border-ink/10 bg-white px-3 py-2 text-sm font-medium"
+          aria-controls="mobileMenu"
+          aria-expanded="false"
+        >
+          <span class="sr-only">Menü</span>
+          ☰
+        </button>
+      </div>
+
+      <!-- Mobile menu -->
+      <div id="mobileMenu" class="md:hidden hidden pb-4" role="dialog" aria-label="Mobil menü">
+        <div class="panel">
+          <div class="panel-inner">
+            <div class="flex flex-col gap-3">
+              <a class="navlink" href="index.html#duyurular">Duyurular</a>
+              <a class="navlink" href="index.html#takvim">Takvim</a>
+              <a class="navlink" href="index.html#yazilar">Öğrenci Yazıları</a>
+              <div class="hairline my-2"></div>
+              <a class="navlink navlink-active" href="about.html" aria-current="page">Hakkımızda →</a>
+              <a class="navlink" href="contact.html">İletişim →</a>
+              <div class="hairline my-2"></div>
+              <a class="btn btn-secondary" href="index.html#katil">Katıl / Başvuru</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="icerik">
+    <!-- Page header -->
+    <section class="section">
+      <div class="wrap">
+        <div class="panel overflow-hidden">
+          <div class="relative panel-inner">
+            <div aria-hidden="true" class="pointer-events-none absolute inset-0">
+              <div class="absolute -top-28 right-[-80px] h-64 w-64 rounded-full bg-brand-200 blur-3xl opacity-60"></div>
+              <div class="absolute -bottom-20 left-[-60px] h-56 w-56 rounded-full bg-brand-100 blur-3xl opacity-80"></div>
+            </div>
+
+            <div class="relative">
+              <div class="flex flex-wrap items-center gap-2 text-xs text-ink/60">
+                <a class="footerlink" href="index.html">Ana sayfa</a>
+                <span aria-hidden="true">/</span>
+                <span class="text-ink/80">Hakkımızda</span>
+              </div>
+              <h1 class="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight text-ink">Hakkımızda</h1>
+              <p class="mt-3 text-base sm:text-lg text-ink/75 max-w-2xl">
+                Okul içindeki müzik üretimini görünür kılan, herkese açık ve sürdürülebilir bir kulüp alanı oluşturmayı amaçlıyoruz.
+              </p>
+
+              <div class="mt-6 flex flex-col sm:flex-row gap-3">
+                <a class="btn btn-primary" href="index.html#takvim">Etkinlikleri gör</a>
+                <a class="btn btn-secondary" href="index.html#katil">Katıl / Başvuru</a>
+                <a class="btn btn-ghost" href="contact.html">İletişim →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mission + What we do -->
+    <section class="section">
+      <div class="wrap">
+        <div class="grid gap-6 md:grid-cols-2">
+          <div class="panel">
+            <div class="panel-inner">
+              <h2 class="section-title">Misyon</h2>
+              <p class="section-sub">Kısa ve net bir amaç cümlesi.</p>
+              <p class="mt-4 text-sm sm:text-base text-ink/75">
+                Öğrencilerin müzikle üretmesini, paylaşmasını ve birlikte çalmasını kolaylaştıran bir topluluk olmak.
+                Kulübün odağı, düzenli buluşmalar ve dönem boyunca küçük etkinliklerle sürdürülebilir bir ritim kurmaktır.
+              </p>
+              <div class="mt-6 flex flex-wrap gap-2">
+                <span class="chip">Herkese açık</span>
+                <span class="chip">Düzenli buluşma</span>
+                <span class="chip">Sahne deneyimi</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-inner">
+              <h2 class="section-title">Neler yapıyoruz?</h2>
+              <p class="section-sub">Örnek formatları çoğaltabilirsiniz.</p>
+              <ul class="mt-5 space-y-3 text-sm sm:text-base text-ink/75">
+                <li class="flex gap-3"><span class="mt-1 h-2 w-2 rounded-full bg-brand-500"></span><span><b>Jam & prova:</b> Haftalık/iki haftalık buluşmalar.</span></li>
+                <li class="flex gap-3"><span class="mt-1 h-2 w-2 rounded-full bg-brand-500"></span><span><b>Mini setler:</b> Öğle arası akustik performanslar.</span></li>
+                <li class="flex gap-3"><span class="mt-1 h-2 w-2 rounded-full bg-brand-500"></span><span><b>Dönem konseri:</b> Dönem sonunda seçilen ekiplerle sahne.</span></li>
+                <li class="flex gap-3"><span class="mt-1 h-2 w-2 rounded-full bg-brand-500"></span><span><b>Öğrenci yazıları:</b> Albüm önerileri, sahne notları, deneyimler.</span></li>
+              </ul>
+              <div class="mt-6">
+                <a class="item-link" href="index.html#yazilar">Yazılara dön →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Who can join + How to join -->
+    <section class="section">
+      <div class="wrap">
+        <div class="panel">
+          <div class="panel-inner">
+            <div class="grid gap-8 md:grid-cols-2">
+              <div>
+                <h2 class="section-title">Kimler katılabilir?</h2>
+                <p class="section-sub">Seviye ve enstrüman şartlarını burada netleştirin.</p>
+                <ul class="mt-5 space-y-3 text-sm sm:text-base text-ink/75">
+                  <li>• Yeni başlayanlar ve deneyimliler</li>
+                  <li>• Enstrüman çalanlar veya vokal</li>
+                  <li>• Dinleyici olarak desteklemek isteyenler</li>
+                </ul>
+                <p class="mt-4 text-sm text-ink/70">
+                  İpucu: Eğer seçme varsa, bunu çok kısa ve şeffaf şekilde yazın.
+                </p>
+              </div>
+
+              <div>
+                <h2 class="section-title">Nasıl katılınır?</h2>
+                <p class="section-sub">3 adım yeterli (mobilde okunaklı).</p>
+
+                <ol class="mt-5 space-y-4">
+                  <li class="flex gap-3">
+                    <span class="chip">1</span>
+                    <div>
+                      <div class="text-sm font-semibold">Formu doldur</div>
+                      <div class="text-sm text-ink/70">İlgi alanı, enstrüman (varsa) ve uygun gün/saat.</div>
+                    </div>
+                  </li>
+                  <li class="flex gap-3">
+                    <span class="chip">2</span>
+                    <div>
+                      <div class="text-sm font-semibold">Tanışma buluşmasına gel</div>
+                      <div class="text-sm text-ink/70">Kısa bir bilgilendirme + planlama.</div>
+                    </div>
+                  </li>
+                  <li class="flex gap-3">
+                    <span class="chip">3</span>
+                    <div>
+                      <div class="text-sm font-semibold">Prova/Jam’e katıl</div>
+                      <div class="text-sm text-ink/70">Küçük setlerle başlayıp büyütürüz.</div>
+                    </div>
+                  </li>
+                </ol>
+
+                <div class="mt-6 flex flex-col sm:flex-row gap-3">
+                  <a class="btn btn-secondary" href="index.html#katil">Katıl / Başvuru</a>
+                  <a class="btn btn-ghost" href="contact.html">Soru sor →</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team -->
+    <section class="section">
+      <div class="wrap">
+        <div class="panel">
+          <div class="panel-inner">
+            <h2 class="section-title">Ekip</h2>
+            <p class="section-sub">İsimleri bu listeden güncelleyin.</p>
+
+            <div class="mt-6 grid gap-4 sm:grid-cols-2">
+              <div class="rounded-2xl border border-ink/10 bg-white p-5">
+                <div class="text-sm font-semibold">Başkan</div>
+                <p class="mt-2 text-sm text-ink/70">İsim Soyisim</p>
+              </div>
+              <div class="rounded-2xl border border-ink/10 bg-white p-5">
+                <div class="text-sm font-semibold">Etkinlik Koordinasyon</div>
+                <p class="mt-2 text-sm text-ink/70">İsim Soyisim</p>
+              </div>
+              <div class="rounded-2xl border border-ink/10 bg-white p-5">
+                <div class="text-sm font-semibold">Sosyal Medya</div>
+                <p class="mt-2 text-sm text-ink/70">İsim Soyisim</p>
+              </div>
+              <div class="rounded-2xl border border-ink/10 bg-white p-5">
+                <div class="text-sm font-semibold">Teknik / Sahne</div>
+                <p class="mt-2 text-sm text-ink/70">İsim Soyisim</p>
+              </div>
+            </div>
+
+            <div class="mt-6 rounded-2xl border border-brand-200 bg-brand-50 p-4 sm:p-5">
+              <div class="text-sm font-semibold">Gönüllü olmak ister misin?</div>
+              <div class="mt-1 text-sm text-ink/70">Etkinlik, sosyal medya veya sahne kurulumunda destek olabilirsin.</div>
+              <div class="mt-4">
+                <a class="item-link" href="contact.html">İletişim →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+      <div class="wrap">
+        <div class="panel">
+          <div class="panel-inner">
+            <h2 class="section-title">SSS</h2>
+            <p class="section-sub">Kısa cevaplar, net kurallar.</p>
+
+            <div class="mt-6 space-y-3">
+              <details class="rounded-2xl border border-ink/10 bg-white p-4">
+                <summary class="cursor-pointer text-sm font-semibold text-ink">Enstrüman şart mı?</summary>
+                <p class="mt-2 text-sm text-ink/75">Şart değil. Vokal, ritim veya organizasyon tarafında da katılım mümkün.</p>
+              </details>
+              <details class="rounded-2xl border border-ink/10 bg-white p-4">
+                <summary class="cursor-pointer text-sm font-semibold text-ink">Seçme var mı?</summary>
+                <p class="mt-2 text-sm text-ink/75">(Varsa) Bazı etkinliklerde kısa bir dinleme yapılabilir. Ayrıntılar duyurularda paylaşılır.</p>
+              </details>
+              <details class="rounded-2xl border border-ink/10 bg-white p-4">
+                <summary class="cursor-pointer text-sm font-semibold text-ink">Provalar ne zaman?</summary>
+                <p class="mt-2 text-sm text-ink/75">Prova günü/saatleri her dönem başında form ve duyurularla netleşir.</p>
+              </details>
+            </div>
+
+            <div class="mt-6 flex flex-col sm:flex-row gap-3">
+              <a class="btn btn-secondary" href="index.html#katil">Katıl / Başvuru</a>
+              <a class="btn btn-ghost" href="index.html">Ana sayfaya dön →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-ink/10">
+    <div class="wrap py-10">
+      <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-8">
+        <div class="max-w-sm">
+          <div class="flex items-center gap-3">
+            <img src="assets/logo.jpg" alt="" class="h-9 w-9 rounded-xl object-cover" />
+            <div>
+              <div class="text-sm font-semibold">Okul Müzik Kulübü</div>
+              <div class="text-xs text-ink/60">Minimal • Mobil uyumlu</div>
+            </div>
+          </div>
+          <p class="mt-3 text-sm text-ink/70">Duyurular, takvim ve öğrenci yazıları için tek sayfa.</p>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-6">
+          <div>
+            <div class="text-xs font-semibold text-ink/60">Sayfa</div>
+            <div class="mt-3 space-y-2">
+              <a class="footerlink" href="index.html#duyurular">Duyurular</a><br />
+              <a class="footerlink" href="index.html#takvim">Takvim</a><br />
+              <a class="footerlink" href="index.html#yazilar">Yazılar</a>
+            </div>
+          </div>
+          <div>
+            <div class="text-xs font-semibold text-ink/60">Kulüp</div>
+            <div class="mt-3 space-y-2">
+              <a class="footerlink" href="about.html">Hakkımızda</a><br />
+              <a class="footerlink" href="contact.html">İletişim</a><br />
+              <a class="footerlink" href="index.html#katil">Katıl / Başvuru</a>
+            </div>
+          </div>
+          <div>
+            <div class="text-xs font-semibold text-ink/60">Sosyal</div>
+            <div class="mt-3 space-y-2">
+              <a class="footerlink" href="#">Instagram</a><br />
+              <a class="footerlink" href="#">YouTube</a><br />
+              <a class="footerlink" href="#">E-posta</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-10 flex items-center justify-between text-xs text-ink/55">
+        <span>© <span id="year"></span> Okul Müzik Kulübü</span>
+        <a class="footerlink" href="#icerik">Yukarı ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Footer year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile menu toggle
+    const btn = document.getElementById('menuBtn');
+    const menu = document.getElementById('mobileMenu');
+
+    function closeMenu() {
+      menu.classList.add('hidden');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+
+    btn.addEventListener('click', () => {
+      const isOpen = !menu.classList.contains('hidden');
+      if (isOpen) closeMenu();
+      else {
+        menu.classList.remove('hidden');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+
+    // Close menu after clicking a link (mobile)
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+
+    // Close menu on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMenu();
+    });
+  </script>
+</body>
+</html>

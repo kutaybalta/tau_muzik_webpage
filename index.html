@@ -18,6 +18,7 @@
 
   <!-- Tailwind (CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
+        
   <script>
     // Logo renklerinden çıkarılmış palet (kolayca değiştirilebilir)
     tailwind.config = {
@@ -82,6 +83,64 @@
 
       .footerlink { @apply text-sm text-ink/70 hover:text-ink transition; }
     }
+    .genius-popup {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;  
+    width: 320px;
+    background-color: #a8080800;
+    
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    z-index: 10000;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    border-radius: 15px;
+    touch-action: none; 
+}
+
+.genius-header {
+    padding: 10px 15px;
+    background: #111;
+    cursor: move; 
+    display: flex;
+    flex-direction: column;
+    user-select: none; 
+}
+
+.genius-title {
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.close-btn {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    width: 25px;
+    height: 25px;
+    background: #f5f5f5;
+    color: #000;
+    border: none;
+    border-radius: 50%;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10001;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.close-btn:hover {
+    background: #fff;
+}
+
+.embed-container {
+    height: 80px;
+    overflow: hidden;
+}
   </style>
 </head>
 
@@ -442,7 +501,25 @@
       </div>
     </div>
   </footer>
+  <div id="genius-popup" class="genius-popup">
+    <button class="close-btn" onclick="closeSpotify()">×</button>
 
+    <div class="genius-card-content">
+        
+
+        <div class="embed-container">
+            <iframe 
+                id="spotify-iframe"
+                src="https://open.spotify.com/embed/playlist/0fGI7tjaf0z47XSlPiZ0hy?utm_source=generator&theme=0" 
+                width="100%" 
+                height="80" 
+                frameBorder="0" 
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                loading="lazy">
+            </iframe>
+        </div>
+    </div>
+</div>
   <script>
     // Footer year
     document.getElementById('year').textContent = new Date().getFullYear();
@@ -472,6 +549,18 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeMenu();
     });
+    
+function closeSpotify() {
+    document.getElementById('genius-popup').style.display = 'none';
+    document.getElementById('spotify-iframe').src = "";
+}
+
+
+
+
   </script>
+ 
+</div>
+</div>
 </body>
 </html>

@@ -21,6 +21,7 @@
   <script>
     // Logo renklerinden çıkarılmış palet (kolayca değiştirilebilir)
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           colors: {
@@ -36,7 +37,9 @@
               800: '#1b5661',
               900: '#133940'
             },
-            ink: '#303040'
+            ink: '#303040',
+            darkbg: '#0f172a',   
+            darkcard: '#1e293b'
           },
           boxShadow: {
             soft: '0 10px 30px rgba(17, 24, 39, 0.08)'
@@ -54,51 +57,43 @@
     @layer components {
       .wrap { @apply mx-auto max-w-5xl px-4 sm:px-6; }
       .section { @apply py-12 sm:py-16; }
-      .section-title { @apply text-xl sm:text-2xl font-semibold text-ink tracking-tight; }
-      .section-sub { @apply mt-2 text-sm sm:text-base text-ink/70; }
-      .hairline { @apply border-t border-ink/10; }
+      .section-title { @apply text-xl sm:text-2xl font-semibold text-ink tracking-tight dark:text-white; }
+      .section-sub { @apply mt-2 text-sm sm:text-base text-ink/70 dark:text-gray-400; }
+      .hairline { @apply border-t border-ink/10 dark:border-white/10; }
 
-      .navlink { @apply text-sm font-medium text-ink/75 hover:text-ink transition; }
-      .navlink-active { @apply text-ink; }
+      .navlink { @apply text-sm font-medium text-ink/75 hover:text-ink transition dark:text-gray-400 dark:hover:text-white; }
+      .navlink-active { @apply text-ink dark:text-white; }
 
       .btn { @apply inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-medium transition shadow-sm; }
-      .btn-primary { @apply bg-ink text-white hover:bg-ink/90; }
-      .btn-secondary { @apply bg-brand-100 text-ink hover:bg-brand-200; }
-      .btn-ghost { @apply bg-transparent text-ink/80 hover:text-ink; }
+      .btn-primary { @apply bg-ink text-white hover:bg-ink/90 dark:bg-white dark:text-ink dark:hover:bg-gray-200; }
+      .btn-secondary { @apply bg-brand-100 text-ink hover:bg-brand-200 dark:bg-brand-900 dark:text-brand-100 dark:hover:bg-brand-800; }
+      .btn-ghost { @apply bg-transparent text-ink/80 hover:text-ink dark:text-gray-400 dark:hover:text-white; }
 
-      .chip { @apply inline-flex items-center gap-2 rounded-full border border-ink/10 bg-white px-3 py-1 text-xs text-ink/70; }
+      .chip { @apply inline-flex items-center gap-2 rounded-full border border-ink/10 bg-white px-3 py-1 text-xs text-ink/70 dark:bg-darkcard dark:border-white/10 dark:text-gray-300; }
 
-      .list-item { @apply py-5; }
-      .item-title { @apply text-base font-semibold text-ink; }
-      .item-meta { @apply mt-1 text-xs text-ink/60; }
-      .item-text { @apply mt-2 text-sm text-ink/75; }
-      .item-link { @apply mt-3 inline-flex text-sm font-medium text-brand-700 hover:text-brand-800; }
-
-      .panel { @apply rounded-2xl border border-ink/10 bg-white shadow-soft; }
+      .panel { @apply rounded-2xl border border-ink/10 bg-white shadow-soft dark:bg-darkcard dark:border-white/5; }
       .panel-inner { @apply p-5 sm:p-7; }
 
-      .announce-bar { @apply rounded-2xl border border-brand-200 bg-brand-50; }
-      .announce-inner { @apply px-5 py-4 sm:px-7 sm:py-5; }
-
-      .footerlink { @apply text-sm text-ink/70 hover:text-ink transition; }
+      .footerlink { @apply text-sm text-ink/70 hover:text-ink transition dark:text-gray-500 dark:hover:text-white; }
+      .item-link { @apply mt-3 inline-flex text-sm font-medium text-brand-700 hover:text-brand-800 dark:text-brand-400 dark:hover:text-brand-300; }
     }
   </style>
 </head>
 
-<body class="min-h-screen bg-white text-ink antialiased">
-  <a href="#icerik" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:shadow-soft">
+<body class="min-h-screen bg-white text-ink antialiased dark:bg-darkbg dark:text-gray-200">
+  <a href="#icerik" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:shadow-soft dark:focus:bg-darkcard">
     İçeriğe atla
   </a>
 
   <!-- Header / Nav -->
-  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-ink/10">
+  <header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-ink/10 dark:bg-darkbg/90 dark:border-white/10">
     <div class="wrap">
       <div class="flex h-16 items-center justify-between">
         <a href="index.html" class="flex items-center gap-3">
           <img src="assets/logo.png" alt="Kulüp logosu" class="h-9 w-9 rounded-xl object-cover" />
           <div class="leading-tight">
             <div class="text-sm font-semibold tracking-tight">Türk-Alman Üniv. Müzik Kulübü</div>
-            <div class="text-xs text-ink/60">Duyurular • Takvim • Yazılar</div>
+            <div class="text-xs text-ink/60 dark:text-gray-500">Hakkımızda</div>
           </div>
         </a>
 
@@ -110,12 +105,16 @@
           <a class="navlink navlink-active" href="about.html" aria-current="page">Hakkımızda</a>
           <a class="navlink" href="contact.html">İletişim</a>
           <a class="btn btn-secondary" href="index.html#katil">Katılım & Öneriler</a>
+          <button id="darkToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-lg" title="Tema Değiştir">
+            <span class="dark:hidden">🌙</span>
+            <span class="hidden dark:inline">☀️</span>
+          </button>
         </nav>
 
         <!-- Mobile menu button -->
         <button
           id="menuBtn"
-          class="md:hidden inline-flex items-center justify-center rounded-xl border border-ink/10 bg-white px-3 py-2 text-sm font-medium"
+          class="md:hidden inline-flex items-center justify-center rounded-xl border border-ink/10 bg-white px-3 py-2 text-sm font-medium text-ink shadow-sm hover:bg-ink/5 transition dark:bg-darkcard dark:border-white/10 dark:text-gray-200 dark:hover:bg-white/5"
           aria-controls="mobileMenu"
           aria-expanded="false"
         >
@@ -156,13 +155,13 @@
             </div>
 
             <div class="relative">
-              <div class="flex flex-wrap items-center gap-2 text-xs text-ink/60">
+              <div class="flex flex-wrap items-center gap-2 text-xs text-ink/60 dark:text-gray-500">
                 <a class="footerlink" href="index.html">Ana sayfa</a>
                 <span aria-hidden="true">/</span>
-                <span class="text-ink/80">Hakkımızda</span>
+                <span class="text-ink/80 dark:text-gray-300">Hakkımızda</span>
               </div>
-              <h1 class="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight text-ink">Hakkımızda</h1>
-              <p class="mt-3 text-base sm:text-lg text-ink/75 max-w-2xl">
+              <h1 class="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight text-ink dark:text-white">Hakkımızda</h1>
+              <p class="mt-3 text-base sm:text-lg text-ink/75 max-w-2xl dark:text-gray-400">
                 Türk-Alman Üniversitesi Müzik Kulübü, okul öğrencilerinin müzik kültürlerini geliştirmek, müzik paylaşımını ve üretimini teşvik etmek amacıyla 2016 yılında kurulan bir öğrenci organizasyonudur. Kulübümüz; jam session’lar, söyleşiler ve dönem içi konserler gibi düzenli faaliyetlerle aktif bir program yürütmektedir.
               </p>
 
@@ -185,13 +184,13 @@
             <div class="panel-inner">
               <h2 class="section-title">Öncelikli Hedeflerimiz</h2>
               
-              <p class="mt-4 text-sm sm:text-base text-ink/75">
+              <p class="mt-4 text-sm sm:text-base text-ink/75 dark:text-gray-400">
                 • Kulüp bünyesinde çeşitli müzik projeleri, podcastler ve içerikler üretmek
               </p>
-              <p class="mt-4 text-sm sm:text-base text-ink/75">
+              <p class="mt-4 text-sm sm:text-base text-ink/75 dark:text-gray-400">
                 • Okul içinde profesyonel kullanım için uygun bir müzik stüdyosu kurmak
               </p>
-              <p class="mt-4 text-sm sm:text-base text-ink/75">
+              <p class="mt-4 text-sm sm:text-base text-ink/75 dark:text-gray-400">
                 • Okulun kültürel kimliğine katkı sağlayan kalıcı projeler geliştirmek
               </p>
               <div class="mt-6 flex flex-wrap gap-2">
@@ -205,7 +204,7 @@
           <div class="panel">
             <div class="panel-inner">
               <h2 class="section-title">Neler yapıyoruz?</h2>
-              <ul class="mt-5 space-y-3 text-sm sm:text-base text-ink/75">
+              <ul class="mt-5 space-y-3 text-sm sm:text-base text-ink/75 dark:text-gray-400">
                 <li class="flex gap-3"><span class="mt-1 h-2 w-2 rounded-full bg-brand-500"></span><span><b>Frühlingsfest ve Herbstfest:</b> Üniversitemizde gelenekselleştirilmesi hedeflenen en büyük sosyal etkinliklerden bazılarıdır.</span></li>
                 <li class="flex gap-3"><span class="mt-1 h-2 w-2 rounded-full bg-brand-500"></span><span><b>Minifest:</b> Öğrencilerin kampüste kendi imkanlarıyla organize ettiği bağımsız festivaldir.</span></li>
                 <li class="flex gap-3"><span class="mt-1 h-2 w-2 rounded-full bg-brand-500"></span><span><b>Konserler ve Jam Etkinlikleri:</b> Üniversitemizdeki öğrencilerin gruplarıyla birlikte sahne aldıkları, zaman zaman başka üniversitelerle ortak olarak gerçekleştirilen etkinliklerdir.</span></li>
@@ -229,40 +228,38 @@
               <div>
                 <h2 class="section-title">Kimler katılabilir?</h2>
                 <p class="section-sub">Seviye ve enstrüman şartlarını burada netleştirin.</p>
-                <ul class="mt-5 space-y-3 text-sm sm:text-base text-ink/75">
-                  <li>• Yeni başlayanlar ve deneyimliler</li>
-                  <li>• Enstrüman çalanlar veya vokal</li>
+                <ul class="mt-5 space-y-3 text-sm sm:text-base text-ink/75 dark:text-gray-400">
+                  <li>• Yeni başlayanlar veya deneyimliler</li>
+                  <li>• Enstrüman çalanlar veya vokaller</li>
                   <li>• Dinleyici olarak desteklemek isteyenler</li>
                 </ul>
-                <p class="mt-4 text-sm text-ink/70">
-                  İpucu: Eğer seçme varsa, bunu çok kısa ve şeffaf şekilde yazın.
-                </p>
+                
               </div>
 
               <div>
                 <h2 class="section-title">Nasıl katılınır?</h2>
-                <p class="section-sub">3 adım yeterli (mobilde okunaklı).</p>
+                <p class="section-sub">Katılmak için 3 adım.</p>
 
                 <ol class="mt-5 space-y-4">
                   <li class="flex gap-3">
                     <span class="chip">1</span>
                     <div>
                       <div class="text-sm font-semibold">Formu doldur</div>
-                      <div class="text-sm text-ink/70">İlgi alanı, enstrüman (varsa) ve uygun gün/saat.</div>
+                      <div class="text-sm text-ink/70 dark:text-gray-500">İlgi alanı, enstrüman (varsa) ve uygun gün/saat.</div>
                     </div>
                   </li>
                   <li class="flex gap-3">
                     <span class="chip">2</span>
                     <div>
                       <div class="text-sm font-semibold">Tanışma buluşmasına gel</div>
-                      <div class="text-sm text-ink/70">Kısa bir bilgilendirme + planlama.</div>
+                      <div class="text-sm text-ink/70 dark:text-gray-500">Kısa bir bilgilendirme + planlama.</div>
                     </div>
                   </li>
                   <li class="flex gap-3">
                     <span class="chip">3</span>
                     <div>
                       <div class="text-sm font-semibold">Prova/Jam’e katıl</div>
-                      <div class="text-sm text-ink/70">Küçük setlerle başlayıp büyütürüz.</div>
+                      <div class="text-sm text-ink/70 dark:text-gray-500">Küçük setlerle başlayıp büyütürüz.</div>
                     </div>
                   </li>
                 </ol>
@@ -287,27 +284,27 @@
             <p class="section-sub">İsimleri bu listeden güncelleyin.</p>
 
             <div class="mt-6 grid gap-4 sm:grid-cols-2">
-              <div class="rounded-2xl border border-ink/10 bg-white p-5">
+              <div class="rounded-2xl border border-ink/10 bg-white p-5 transition-colors dark:border-white/10 dark:bg-gray-800/50">
                 <div class="text-sm font-semibold">Başkan</div>
-                <p class="mt-2 text-sm text-ink/70">İsim Soyisim</p>
+                <p class="mt-2 text-sm text-ink/70 dark:text-gray-500">İsim Soyisim</p>
               </div>
-              <div class="rounded-2xl border border-ink/10 bg-white p-5">
+              <div class="rounded-2xl border border-ink/10 bg-white p-5 transition-colors dark:border-white/10 dark:bg-gray-800/50">
                 <div class="text-sm font-semibold">Etkinlik Koordinasyon</div>
-                <p class="mt-2 text-sm text-ink/70">İsim Soyisim</p>
+                <p class="mt-2 text-sm text-ink/70 dark:text-gray-500">İsim Soyisim</p>
               </div>
-              <div class="rounded-2xl border border-ink/10 bg-white p-5">
+              <div class="rounded-2xl border border-ink/10 bg-white p-5 transition-colors dark:border-white/10 dark:bg-gray-800/50">
                 <div class="text-sm font-semibold">Sosyal Medya</div>
-                <p class="mt-2 text-sm text-ink/70">İsim Soyisim</p>
+                <p class="mt-2 text-sm text-ink/70 dark:text-gray-500">İsim Soyisim</p>
               </div>
-              <div class="rounded-2xl border border-ink/10 bg-white p-5">
+              <div class="rounded-2xl border border-ink/10 bg-white p-5 transition-colors dark:border-white/10 dark:bg-gray-800/50">
                 <div class="text-sm font-semibold">Teknik / Sahne</div>
-                <p class="mt-2 text-sm text-ink/70">İsim Soyisim</p>
+                <p class="mt-2 text-sm text-ink/70 dark:text-gray-500">İsim Soyisim</p>
               </div>
             </div>
 
-            <div class="mt-6 rounded-2xl border border-brand-200 bg-brand-50 p-4 sm:p-5">
+            <div class="mt-6 rounded-2xl border border-brand-200 bg-brand-50 p-4 sm:p-5 dark:bg-brand-900 dark:border-brand-800">
               <div class="text-sm font-semibold">Gönüllü olmak ister misin?</div>
-              <div class="mt-1 text-sm text-ink/70">Etkinlik, sosyal medya veya sahne kurulumunda destek olabilirsin.</div>
+              <div class="mt-1 text-sm text-ink/70 dark:text-gray-500">Etkinlik, sosyal medya veya sahne kurulumunda destek olabilirsin.</div>
               <div class="mt-4">
                 <a class="item-link" href="contact.html">İletişim →</a>
               </div>
@@ -326,17 +323,17 @@
             <p class="section-sub">Sıkça Sorulan Sorular</p>
 
             <div class="mt-6 space-y-3">
-              <details class="rounded-2xl border border-ink/10 bg-white p-4">
-                <summary class="cursor-pointer text-sm font-semibold text-ink">Enstrüman çalmak şart mı?</summary>
-                <p class="mt-2 text-sm text-ink/75">Şart değil. Vokal, sosyal medya, sponsorluk veya organizasyon tarafında da katılım mümkün.</p>
+              <details class="rounded-2xl border border-ink/10 bg-white p-4 dark:border-white/10 dark:bg-gray-800/50">
+                <summary class="cursor-pointer text-sm font-semibold text-ink dark:text-gray-500">Enstrüman çalmak şart mı?</summary>
+                <p class="mt-2 text-sm text-ink/75 dark:text-gray-500">Şart değil. Vokal, sosyal medya, sponsorluk veya organizasyon tarafında da katılım mümkün.</p>
               </details>
-              <details class="rounded-2xl border border-ink/10 bg-white p-4">
-                <summary class="cursor-pointer text-sm font-semibold text-ink">Seçme var mı?</summary>
-                <p class="mt-2 text-sm text-ink/75"> Kulübe katılmak için herhangi bir eleme yok. İsteyen herkes katılım sağlayabilir.</p>
+              <details class="rounded-2xl border border-ink/10 bg-white p-4 dark:border-white/10 dark:bg-gray-800/50">
+                <summary class="cursor-pointer text-sm font-semibold text-ink dark:text-gray-500">Seçme var mı?</summary>
+                <p class="mt-2 text-sm text-ink/75 dark:text-gray-500"> Kulübe katılmak için herhangi bir eleme yok. İsteyen herkes katılım sağlayabilir.</p>
               </details>
-              <details class="rounded-2xl border border-ink/10 bg-white p-4">
-                <summary class="cursor-pointer text-sm font-semibold text-ink">Provalar ne zaman oluyor?</summary>
-                <p class="mt-2 text-sm text-ink/75">Provaların ilerlediği belirli bir takvim yok. Prova günü/saatleri prova öncesinde netleştirilip duyurulur.</p>
+              <details class="rounded-2xl border border-ink/10 bg-white p-4 dark:border-white/10 dark:bg-gray-800/50">
+                <summary class="cursor-pointer text-sm font-semibold text-ink dark:text-gray-500">Provalar ne zaman oluyor?</summary>
+                <p class="mt-2 text-sm text-ink/75 dark:text-gray-500">Provaların ilerlediği belirli bir takvim yok. Prova günü/saatleri prova öncesinde netleştirilip duyurulur.</p>
               </details>
             </div>
 
@@ -350,7 +347,7 @@
     </section>
   </main>
 
-  <footer class="border-t border-ink/10">
+  <footer class="border-t border-ink/10 dark:border-white/10 bg-white dark:bg-darkbg">
     <div class="wrap py-10">
       <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-8">
         <div class="max-w-sm">
@@ -358,15 +355,14 @@
             <img src="assets/logo.png" alt="" class="h-9 w-9 rounded-xl object-cover" />
             <div>
               <div class="text-sm font-semibold">Türk-Alman Üniv. Müzik Kulübü</div>
-              <div class="text-xs text-ink/60">Minimal • Mobil uyumlu</div>
+              <div class="text-xs text-ink/60 dark:text-gray-500">Minimal • Mobil uyumlu</div>
             </div>
           </div>
-          <p class="mt-3 text-sm text-ink/70">Duyurular, takvim ve öğrenci yazıları için tek sayfa.</p>
         </div>
 
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-6">
           <div>
-            <div class="text-xs font-semibold text-ink/60">Sayfa</div>
+            <div class="text-xs font-semibold text-ink/60 dark:text-gray-500">Sayfa</div>
             <div class="mt-3 space-y-2">
               <a class="footerlink" href="index.html#duyurular">Duyurular</a><br />
               <a class="footerlink" href="index.html#takvim">Takvim</a><br />
@@ -374,7 +370,7 @@
             </div>
           </div>
           <div>
-            <div class="text-xs font-semibold text-ink/60">Kulüp</div>
+            <div class="text-xs font-semibold text-ink/60 dark:text-gray-500">Kulüp</div>
             <div class="mt-3 space-y-2">
               <a class="footerlink" href="about.html">Hakkımızda</a><br />
               <a class="footerlink" href="contact.html">İletişim</a><br />
@@ -382,7 +378,7 @@
             </div>
           </div>
           <div>
-            <div class="text-xs font-semibold text-ink/60">Sosyal</div>
+            <div class="text-xs font-semibold text-ink/60 dark:text-gray-500">Sosyal</div>
             <div class="mt-3 space-y-2">
               <a class="footerlink" href="#">Instagram</a><br />
               <a class="footerlink" href="#">YouTube</a><br />
@@ -392,7 +388,7 @@
         </div>
       </div>
 
-      <div class="mt-10 flex items-center justify-between text-xs text-ink/55">
+      <div class="mt-10 flex items-center justify-between text-xs text-ink/55 dark:text-gray-500">
         <span>© <span id="year"></span> Türk-Alman Üniv. Müzik Kulübü</span>
         <a class="footerlink" href="#icerik">Yukarı ↑</a>
       </div>
@@ -427,6 +423,18 @@
     // Close menu on Escape
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeMenu();
+    });
+    // darrrrk
+    const html = document.documentElement;
+    const darkToggle = document.getElementById('darkToggle');
+
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      html.classList.add('dark');
+    }
+
+    darkToggle.addEventListener('click', () => {
+      html.classList.toggle('dark');
+      localStorage.theme = html.classList.contains('dark') ? 'dark' : 'light';
     });
   </script>
 </body>

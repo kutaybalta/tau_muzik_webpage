@@ -105,22 +105,28 @@
           <a class="navlink navlink-active" href="about.html" aria-current="page">Hakkımızda</a>
           <a class="navlink" href="contact.html">İletişim</a>
           <a class="btn btn-secondary" href="index.html#katil">Katılım & Öneriler</a>
-          <button id="darkToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-lg" title="Tema Değiştir">
+          <button class="darkToggle p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-lg" title="Tema Değiştir">
             <span class="dark:hidden">🌙</span>
             <span class="hidden dark:inline">☀️</span>
           </button>
         </nav>
 
         <!-- Mobile menu button -->
-        <button
+        <div class="flex items-center gap-2 md:hidden">
+    <button class="darkToggle md:hidden inline-flex items-center justify-center rounded-xl border border-ink/10 bg-white px-3 py-2 text-sm font-medium text-ink shadow-sm hover:bg-ink/5 focus:outline-none focus:ring-2 focus:ring-ink/30 dark:bg-darkcard dark:border-white/10 dark:text-white dark:hover:bg-white/5"
+    >
+        <span class="dark:hidden">🌙</span>
+        <span class="hidden dark:inline">☀️</span>
+    </button>
+     <button
           id="menuBtn"
-          class="md:hidden inline-flex items-center justify-center rounded-xl border border-ink/10 bg-white px-3 py-2 text-sm font-medium text-ink shadow-sm hover:bg-ink/5 transition dark:bg-darkcard dark:border-white/10 dark:text-gray-200 dark:hover:bg-white/5"
+          class="md:hidden inline-flex items-center justify-center rounded-xl border border-ink/10 bg-white px-3 py-2 text-sm font-medium text-ink shadow-sm hover:bg-ink/5 focus:outline-none focus:ring-2 focus:ring-ink/30 dark:bg-darkcard dark:border-white/10 dark:text-white dark:hover:bg-white/5"
           aria-controls="mobileMenu"
           aria-expanded="false"
         >
           <span class="sr-only">Menü</span>
           ☰
-        </button>
+        </button></div>
       </div>
 
       <!-- Mobile menu -->
@@ -135,7 +141,11 @@
               <a class="navlink navlink-active" href="about.html" aria-current="page">Hakkımızda →</a>
               <a class="navlink" href="contact.html">İletişim →</a>
               <div class="hairline my-2"></div>
-              <a class="btn btn-secondary" href="index.html#katil">Katılım & Öneri</a>
+              <a class="btn btn-secondary" href="index.html#katil">Katılım & Öneriler</a>
+          <button id="darkToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-lg" title="Tema Değiştir">
+            <span class="dark:hidden">🌙</span>
+            <span class="hidden dark:inline">☀️</span>
+          </button>
             </div>
           </div>
         </div>
@@ -156,7 +166,7 @@
             alt="" 
             class="h-full w-full object-cover blur-none" 
           />
-          <div class="absolute inset-0 bg-black/50 dark:bg-black/70"></div>
+          <div class="absolute inset-0 bg-black/20 dark:bg-black/50"></div>
         </div>
 
         <div class="relative w-full">
@@ -227,8 +237,9 @@
           <span><b>Minifest:</b> Öğrencilerin kampüste kendi imkanlarıyla organize ettiği bağımsız festivaller.</span>
         </div>
         <div class="flex gap-4">
-  <img src="assets/meryem.png" class="w-1/2 h-80 object-cover rounded-xl" alt="Görsel 1">
-  <img src="assets/publikum.png" class="w-1/2 h-80 object-cover rounded-xl" alt="Görsel 2">
+  <img src="assets/meryem.png" class="w-1/2 h-auto object-cover rounded-xl" alt="Görsel 1" style="image-rendering: -webkit-optimize-contrast;">
+  
+  <img src="assets/publikum.png" class="w-1/2 h-auto object-cover rounded-xl" alt="Görsel 2" style="image-rendering: -webkit-optimize-contrast;">
 </div>
       </li>
 
@@ -238,8 +249,8 @@
           <span><b>Konserler ve Jam Etkinlikleri:</b> Üniversitemizdeki öğrencilerin gruplarıyla birlikte sahne aldıkları etkinlikler.</span>
         </div>
         <div class="flex gap-4">
-  <img src="assets/turtle.jpeg" class="w-1/2 h-80 object-cover rounded-xl" alt="Görsel 1">
-  <img src="assets/palavra.jpeg" class="w-1/2 h-80 object-cover rounded-xl" alt="Görsel 2">
+  <img src="assets/turtle.jpeg" class="w-1/2 h-auto object-cover rounded-xl" alt="Görsel 1" style="image-rendering: -webkit-optimize-contrast;">
+  <img src="assets/palavra.jpeg" class="w-1/2 h-auto object-cover rounded-xl" alt="Görsel 2" style="image-rendering: -webkit-optimize-contrast;">
 </div>
       </li>
 
@@ -249,8 +260,8 @@
           <span><b>Dinletiler:</b> Kampüsün farklı noktalarında gerçekleştirdiğimiz akustik performanslar.</span>
         </div>
         <div class="flex gap-4">
-  <img src="assets/dinleti.JPG" class="w-1/2 h-80 object-cover rounded-xl" alt="Görsel 1">
-  <img src="assets/dinleti2.jpeg" class="w-1/2 h-80 object-cover rounded-xl" alt="Görsel 2">
+  <img src="assets/dinleti.JPG" class="w-1/2 h-auto object-cover rounded-xl" alt="Görsel 1" style="image-rendering: -webkit-optimize-contrast;">
+  <img src="assets/dinleti2.jpeg" class="w-1/2 h-auto object-cover rounded-xl" alt="Görsel 2" style="image-rendering: -webkit-optimize-contrast;" >
 </div>
       </li>
 
@@ -469,18 +480,24 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeMenu();
     });
-    // darrrrk
+    // dark mode
     const html = document.documentElement;
-    const darkToggle = document.getElementById('darkToggle');
+    const darkToggles = document.querySelectorAll('.darkToggle');
 
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      html.classList.add('dark');
+        html.classList.add('dark');
+    } else {
+        html.classList.remove('dark');
     }
 
-    darkToggle.addEventListener('click', () => {
-      html.classList.toggle('dark');
-      localStorage.theme = html.classList.contains('dark') ? 'dark' : 'light';
+    darkToggles.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation(); 
+            html.classList.toggle('dark');
+            localStorage.theme = html.classList.contains('dark') ? 'dark' : 'light';
+        });
     });
+
   </script>
 </body>
 </html>

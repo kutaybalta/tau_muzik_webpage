@@ -96,14 +96,20 @@
           <a class="navlink" href="about.html">Hakkımızda</a>
           <a class="navlink navlink-active" href="contact.html" aria-current="page">İletişim</a>
           <a class="btn btn-secondary" href="index.html#katil">Katılım & Öneriler</a>
-          <button id="darkToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-lg" title="Koyu/Açık Tema">
+          <button class="darkToggle p-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-lg" title="Koyu/Açık Tema">
             <span class="dark:hidden">🌙</span>
             <span class="hidden dark:inline">☀️</span>
           </button>
         </nav>
 
         <!-- Mobile menu button -->
-        <button
+        <div class="flex items-center gap-2 md:hidden">
+    <button class="darkToggle md:hidden inline-flex items-center justify-center rounded-xl border border-ink/10 bg-white px-3 py-2 text-sm font-medium text-ink shadow-sm hover:bg-ink/5 focus:outline-none focus:ring-2 focus:ring-ink/30 dark:bg-darkcard dark:border-white/10 dark:text-white dark:hover:bg-white/5"
+    >
+        <span class="dark:hidden">🌙</span>
+        <span class="hidden dark:inline">☀️</span>
+    </button>
+     <button
           id="menuBtn"
           class="md:hidden inline-flex items-center justify-center rounded-xl border border-ink/10 bg-white px-3 py-2 text-sm font-medium text-ink shadow-sm hover:bg-ink/5 focus:outline-none focus:ring-2 focus:ring-ink/30 dark:bg-darkcard dark:border-white/10 dark:text-white dark:hover:bg-white/5"
           aria-controls="mobileMenu"
@@ -111,7 +117,7 @@
         >
           <span class="sr-only">Menü</span>
           ☰
-        </button>
+        </button></div>
       </div>
 
       <!-- Mobile menu -->
@@ -127,6 +133,7 @@
               <a class="navlink navlink-active" href="contact.html" aria-current="page">İletişim →</a>
               <div class="hairline my-2"></div>
               <a class="btn btn-secondary" href="index.html#katil">Katılım & Öneriler</a>
+          
             </div>
           </div>
         </div>
@@ -320,20 +327,23 @@
       if (e.key === 'Escape') closeMenu();
     });
     // dark mode
-    const darkToggle = document.getElementById('darkToggle');
     const html = document.documentElement;
+    const darkToggles = document.querySelectorAll('.darkToggle');
 
-  
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      html.classList.add('dark');
+        html.classList.add('dark');
     } else {
-      html.classList.remove('dark');
+        html.classList.remove('dark');
     }
 
-    darkToggle.addEventListener('click', () => {
-      html.classList.toggle('dark');
-      localStorage.theme = html.classList.contains('dark') ? 'dark' : 'light';
+    darkToggles.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation(); 
+            html.classList.toggle('dark');
+            localStorage.theme = html.classList.contains('dark') ? 'dark' : 'light';
+        });
     });
+
   </script>
 </body>
 </html>
